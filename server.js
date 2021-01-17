@@ -29,7 +29,8 @@ app.get('/api/timestamp', (req, res) => {
 });
 
 app.get('/api/timestamp/:date', (req, res) => {
-  if (req.params.date.match(/[0-9]{4}\-[0-9]{2}\-[0-9]{2}/i)) {
+  let testDate = new Date(req.params.date);
+  if (testDate instanceof Date && !isNaN(testDate.valueOf())) {
     let date = new Date(req.params.date);
     res.json({ unix: date.getTime(), utc: date.toUTCString() });
   } else if (req.params.date.match(/[0-9]/)) {
@@ -39,7 +40,7 @@ app.get('/api/timestamp/:date', (req, res) => {
       utc: date.toUTCString(),
     });
   }
-  res.json({ error: 'Invalid Date' }, null, ' ');
+  res.json({ error: 'Invalid Date' });
 });
 
 // listen for requests :)
