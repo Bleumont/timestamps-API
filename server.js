@@ -35,11 +35,11 @@ app.get('/api/timestamp/:date', (req, res) => {
   } else if (req.params.date.match(/[0-9]/)) {
     let date = new Date(+req.params.date);
     res.json({
-      unix: req.params.date,
+      unix: date.valueOf(),
       utc: date.toUTCString(),
     });
   }
-  res.json({ error: 'Invalid Date' });
+  res.json({ error: 'Invalid Date' }, null, ' ');
 });
 
 // listen for requests :)
